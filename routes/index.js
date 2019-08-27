@@ -28,9 +28,9 @@ router.post('/user/', userController.createUser);
 //Autenticar usuario
 router.post('/user/auth', userController.auth);
 //Alterar dados de um usuario
-router.put('/user/:id', );
+router.put('/user/:id', auth, userController.updateData);
 //Deletar um usuario
-router.delete('/user/:id', );
+router.delete('/user/:id', auth, userController.deleteData);
 
 
 

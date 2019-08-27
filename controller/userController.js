@@ -3,7 +3,7 @@ const Users = require("../models/user");
 require('dotenv').config();
 
 const createUserToken = async (userId) => {
-    return await jwt.sign({id: userId}, process.env.SECRET_KEY , {expiresIn: '7d'});
+    return await jwt.sign({ id: userId }, process.env.SECRET_KEY, { expiresIn: '7d' });
 }
 
 module.exports = {
@@ -138,6 +138,70 @@ module.exports = {
                     }
                 })
             }
+        } catch (e) {
+            return res.send({
+                mensagem: "Ocorreu algum erro durante a requisição",
+                error: `Erro: \n ${e}`,
+                success: false
+            })
+        }
+    },
+    async updateData() {
+        try {
+            let { email, nome } = await req.body;
+            let id = await req.params.id;
+            if (!email || !nome) {
+                return res.send({
+                    mensagem: "Preencha todos os campos!",
+                    error: `Erro: \n Nem todos os campos foram preenchidos!`,
+                    success: false
+                })
+            }
+            else {
+                Users.findByIdAndUpdate(id, req.body, { new: true }, (err, model) => {
+                    if (err) {
+                        return res.send({
+                            mensagem: "Ocorreu algum erro durante a requisição",
+                            error: `Erro: \n ${err}`,
+                            success: false
+                        })
+                    }
+                    else {
+                        return res.send({
+                            mensagem: "Usuario atualizado com sucesso!",
+                            success: true
+                        })
+                    }
+                })
+            }
+        } catch (e) {
+            return res.send({
+                mensagem: "Ocorreu algum erro durante a requisição",
+                error: `Erro: \n ${e}`,
+                success: false
+            })
+        }
+    },
+    async deleteData() {
+        try {
+            let id = await req.params.id;
+
+            Users.findByIdAndRemove(id , (err, data) => {
+                if (err) {
+                    return res.send({
+                        mensagem: "Ocorreu algum erro durante a requisição",
+                        error: `Erro: \n ${err}`,
+                        success: false
+                    })
+                }
+                else {
+                    return res.send({
+                        mensagem: "Usuario deletado com sucesso!",
+                        success: true
+                    })
+                }
+            })
+
         } catch (e) {
             return res.send({
                 mensagem: "Ocorreu algum erro durante a requisição",
