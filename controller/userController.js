@@ -2,8 +2,8 @@ var bcrypt = require("bcryptjs");
 const Users = require("../models/user");
 require('dotenv').config();
 
-const createUserToken = (userId) => {
-    return jwt.sign({id: userId}, process.env.SECRET_KEY , {expiresIn: '7d'});
+const createUserToken = async (userId) => {
+    return await jwt.sign({id: userId}, process.env.SECRET_KEY , {expiresIn: '7d'});
 }
 
 module.exports = {

@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('../middlewares/auth');
+var userController = require('../controller/userController');
 var filmeController = require('../controller/filmeController');
 
 //EndPoints
@@ -20,9 +22,11 @@ router.get('/salas/:id', );
 router.put('/salas/:id/cadeira/:id');
 
 //Retorna os dados do usuario
-router.get('/user/:id', );
+router.get('/user/:id', auth, userController.findUserById);
 //Cria um usuario
-router.post('/user/', );
+router.post('/user/', userController.createUser);
+//Autenticar usuario
+router.post('/user/auth', userController.auth);
 //Alterar dados de um usuario
 router.put('/user/:id', );
 //Deletar um usuario
