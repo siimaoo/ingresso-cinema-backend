@@ -18,7 +18,7 @@ FilmeSchema = new Schema({
         type: Number,
         required: true,
     },
-    dia: {
+    dataSessao: {
         type: String,
         required: true
     },

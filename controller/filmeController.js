@@ -1,4 +1,3 @@
-var mongoose = require('mongoose');
 var axios = require('axios');
 var Filme = require('../models/filme');
 
@@ -56,27 +55,42 @@ module.exports = {
             let sala = await req.body.sala;
             let posicaoAbs = await req.body.posicaoAbs;
             let posicaoOrd = await req.body.posicaoOrd;
-            let dia = await req.body.dia;
-            let horario = await req.body.horario;
-            await Filme.create({
-                filmId: filmeId,
-                posicaoAbs: posicaoAbs,
-                posicaoOrd: posicaoOrd,
-                numSala: sala,
-                dia: dia,
-                horario: horario
-            }).then(() => {
-                return res.send({
-                    mensagem: "Compra do ingresso realizada com sucesso! \n Aguarde a confirmação.",
-                    success: true
-                });
-            }).catch((e) => {
+            let dataSessao = await req.body.dataSessao;
+            let horarioCompra = await req.body.horario;
+            
+            let dataSeparada = dataSessao.split("/");
+            let data = new Date(dataSeparada[2], dataSeparada[1] - 1, dataSeparada[0]);
+
+            if (data >= new Date()) {
+                await Filme.create({
+                    filmId: filmeId,
+                    posicaoAbs: posicaoAbs,
+                    posicaoOrd: posicaoOrd,
+                    numSala: sala,
+                    dataSessao: dataSessao,
+                    horario: horarioCompra
+                }).then(() => {
+                    return res.send({
+                        mensagem: "Compra do ingresso realizada com sucesso! \n Aguarde a confirmação.",
+                        success: true
+                    });
+                }).catch((e) => {
+                    return res.send({
+                        mensagem: "Ocorreu algum erro durante a requisição",
+                        error: `Erro: \n ${e}`,
+                        success: false
+                    })
+                })
+            }
+            else {
                 return res.send({
                     mensagem: "Ocorreu algum erro durante a requisição",
-                    error: `Erro: \n ${e}`,
+                    error: `Erro: \n A data enviada na requisição foi ${data} sendo ${new Date()} o minimo!`,
                     success: false
                 })
-            })
+            }
+
+            
 
         }
         catch (e) {
