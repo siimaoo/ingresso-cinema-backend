@@ -12,14 +12,13 @@ router.get('/filmes', filmeController.getAll);
 router.get('/filmes/:id', filmeController.getById);
 
 //Ato de comprar ingresso
-router.post('/filmes/:id/ingressos', filmeController.buyTicket);
+router.post('/filmes/:id/ingressos', auth ,filmeController.buyTicket);
 
 //Retorna as salas disponiveis
 router.get('/salas', );
 //Retorna cadeiras da sala
 router.get('/salas/:id', );
-//alterar estado da cadeira
-router.put('/salas/:id/cadeira/:id');
+
 
 //Retorna os dados do usuario
 router.get('/user/:id', auth, userController.findUserById);

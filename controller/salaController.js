@@ -1,0 +1,1 @@
+var Sala = require("../models/sala");

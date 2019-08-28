@@ -10,7 +10,7 @@ module.exports = {
     async findUserById(req, res) {
         try {
             let id = await req.params.id;
-            Users.findById(id, (err, data) => {
+            await Users.findById(id, (err, data) => {
                 if (err) {
                     return res.send({
                         mensagem: "Ocorreu algum erro durante a requisição",
@@ -45,7 +45,7 @@ module.exports = {
                 })
             }
             else {
-                Users.findOne({ email: email }, (err, data) => {
+                await Users.findOne({ email: email }, (err, data) => {
                     if (err) {
                         return res.send({
                             mensagem: "Ocorreu algum erro durante a requisição!",
@@ -61,7 +61,7 @@ module.exports = {
                         })
                     }
                     else {
-                        Users.create(req.body, (err, data) => {
+                        await Users.create(req.body, (err, data) => {
                             if (err) {
                                 return res.send({
                                     mensagem: "Ocorreu algum erro durante a requisição!",
@@ -102,7 +102,7 @@ module.exports = {
                 })
             }
             else {
-                Users.findOne({ email: email }, (err, data) => {
+                await Users.findOne({ email: email }, (err, data) => {
                     if (err) {
                         return res.send({
                             mensagem: "Ocorreu algum erro durante a requisição",
@@ -158,7 +158,7 @@ module.exports = {
                 })
             }
             else {
-                Users.findByIdAndUpdate(id, req.body, { new: true }, (err, model) => {
+                await Users.findByIdAndUpdate(id, req.body, { new: true }, (err, model) => {
                     if (err) {
                         return res.send({
                             mensagem: "Ocorreu algum erro durante a requisição",
@@ -186,7 +186,7 @@ module.exports = {
         try {
             let id = await req.params.id;
 
-            Users.findByIdAndRemove(id , (err, data) => {
+            await Users.findByIdAndRemove(id , (err, data) => {
                 if (err) {
                     return res.send({
                         mensagem: "Ocorreu algum erro durante a requisição",

@@ -62,6 +62,7 @@ module.exports = {
             let horarioSeparado = horarioCompra.split(":");
             let data = new Date(dataSeparada[2], dataSeparada[1] - 1, dataSeparada[0], horarioSeparado[1], horarioSeparado[0]);
 
+            
             if (data >= new Date()) {
                 await Filme.create({
                     filmId: filmeId,
